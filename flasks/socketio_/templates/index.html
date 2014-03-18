@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+<script type="text/javascript">
+var socket = io.connect("/hello");
+
+socket.on('connect', function () {
+     console.log('connected');
+     socket.emit('message_from_client', 'Hello, socket.io!', function(response) {
+         console.log(response);
+     });
+});
+</script>
+</head>
+</html>
