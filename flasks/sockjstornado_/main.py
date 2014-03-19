@@ -7,6 +7,8 @@ from tornado.ioloop import IOLoop
 import sockjs.tornado
 
 
+HTTP_PORT = 8080
+SOCKJS_PORT = 8081
 ROOT = os.path.normpath(os.path.dirname(__file__))
 wsgi_app = Flask(__name__)
 
@@ -50,13 +52,11 @@ http_app = tornado.web.Application(
 
 
 if __name__ == '__main__':
-    import logging
-    logging.getLogger().setLevel(logging.DEBUG)
-
+    print "sockjs-tornado version running on port {}".format(HTTP_PORT)
 
     http_server = tornado.httpserver.HTTPServer(http_app)
-    http_server.listen(8080)
+    http_server.listen(HTTP_PORT)
 
-    sock_app.listen(8081)
+    sock_app.listen(SOCKJS_PORT)
 
     IOLoop.instance().start()
