@@ -10,11 +10,11 @@ sample.on('disconnect', function() {
 
 sample.on('connect', function () {
      console.log('connected');
-     sample.emit('message_from_client', 'Hello, socket.io!', function(response) {
+     sample.emit('message_from_client', 'Hello, tornadio!', function(response) {
          console.log(response);
      });
 });
 </script>
 </head>
-<body>tornado version</body>
+<body>tornadio version</body>
 </html>

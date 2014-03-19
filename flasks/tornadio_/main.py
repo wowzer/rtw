@@ -6,6 +6,8 @@ from tornado.ioloop import IOLoop
 from tornadio2 import SocketConnection, TornadioRouter, SocketServer, event
 
 
+APP_PORT = 8080
+SOCKET_IO_PORT = 8081
 ROOT = os.path.normpath(os.path.dirname(__file__))
 wsgi_app = Flask(__name__)
 
@@ -44,7 +46,7 @@ def main():
 
 sock_app = tornado.web.Application(
     handlers=example_router.urls,
-    socket_io_port=8081,
+    socket_io_port=SOCKET_IO_PORT,
     debug=True
 )
 
@@ -57,12 +59,8 @@ http_app = tornado.web.Application(
 
 
 if __name__ == '__main__':
-    import logging
-    logging.getLogger().setLevel(logging.DEBUG)
-
-
     http_server = tornado.httpserver.HTTPServer(http_app)
-    http_server.listen(8080)
+    http_server.listen(APP_PORT)
 
     socket_server = SocketServer(sock_app, auto_start=False)
 
