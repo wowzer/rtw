@@ -1,4 +1,7 @@
 from flask import request, Flask, abort, render_template
+
+
+PORT = 8080
 app = Flask(__name__)
 
 
@@ -28,4 +31,7 @@ from gevent.pywsgi import WSGIServer
 from geventwebsocket import WebSocketError
 from geventwebsocket.handler import WebSocketHandler
 
-WSGIServer(("0.0.0.0", 8080), app, handler_class=WebSocketHandler).serve_forever()
+
+if __name__ == '__main__':
+    print "Flask-websocket version running on port {}".format(PORT)
+    WSGIServer(("0.0.0.0", PORT), app, handler_class=WebSocketHandler).serve_forever()
