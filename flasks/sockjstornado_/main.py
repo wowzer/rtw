@@ -1,6 +1,6 @@
 import os
-from flask import request, Flask, abort, render_template, Response
-import tornado
+from flask import Flask, render_template
+import tornado, tornado.httpserver
 from tornado.wsgi import WSGIContainer
 from tornado.ioloop import IOLoop
 
@@ -16,14 +16,13 @@ wsgi_app = Flask(__name__)
 
 class ExampleConnection(sockjs.tornado.SockJSConnection):
 
-   @event
-   def message_from_client(self, message):
-       print "Message: {}".format(message)
-       return "Your message was: {}".format(message)
+    def on_message(self, message):
+        print "Message: {}".format(message)
+        self.send("Your message was: {}".format(message))
 
 
 def example_router(prefix):
-   return sockjs.tornado.SockJSRouter(ExampleConnection, prefix).urls)
+    return sockjs.tornado.SockJSRouter(ExampleConnection, prefix)
 
 
 # ---------------------------------------------------------------------------
@@ -38,8 +37,7 @@ def main():
 
 
 sock_app = tornado.web.Application(
-    handlers=example_router.urls,
-    socket_io_port=8081,
+    handlers=example_router('/info').urls,
     debug=True
 )
 
@@ -59,6 +57,6 @@ if __name__ == '__main__':
     http_server = tornado.httpserver.HTTPServer(http_app)
     http_server.listen(8080)
 
-    socket_server = SocketServer(sock_app, auto_start=False)
+    sock_app.listen(8081)
 
     IOLoop.instance().start()

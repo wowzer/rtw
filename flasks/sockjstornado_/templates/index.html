@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.5/socket.io.min.js"></script>
+<script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
 <script type="text/javascript">
-var sample = io.connect('http://localhost:8081');
-sample.on('disconnect', function() {
-    sample.socket.reconnect();
-});
+var sample = new SockJS('http://' + window.location.hostname + ':8081/info');
 
-sample.on('connect', function () {
-     console.log('connected');
-     sample.emit('message_from_client', 'Hello, socket.io!', function(response) {
-         console.log(response);
-     });
-});
+sample.onclose = function() {
+    console.log('disconnected');
+};
+
+sample.onopen = function () {
+    console.log('connected');
+    sample.send('Hello, SockJS!');
+};
+
+sample.onmessage = function(response) {
+    console.log(response.data);
+};
+
 </script>
 </head>
-<body>tornado version</body>
+<body>tornado sockjs version</body>
 </html>
