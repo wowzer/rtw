@@ -12,9 +12,9 @@ def handle_websocket():
         try:
             message = wsock.receive()
             print message
-            wsock.send("Your message was: {}".format(message)):
-            break
-
+            wsock.send("Your message was: {}".format(message))
+        except:
+            pass
 
 @app.route('/')
 def main():
