@@ -18,7 +18,7 @@ class ExampleConnection(sockjs.tornado.SockJSConnection):
 
     def on_message(self, message):
         print "Message: {}".format(message)
-        return "Your message was: {}".format(message)
+        self.send("Your message was: {}".format(message))
 
 
 def example_router(prefix):
@@ -37,8 +37,7 @@ def main():
 
 
 sock_app = tornado.web.Application(
-    handlers=example_router('/').urls,
-    socket_io_port=8081,
+    handlers=example_router('/info').urls,
     debug=True
 )
 
