@@ -6,6 +6,7 @@ from socketio.namespace import BaseNamespace
 from flask import request, Flask, abort, render_template, Response
 
 
+PORT = 8080
 app = Flask(__name__)
 app.debug = True
 
@@ -42,4 +43,7 @@ def main():
 
 from socketio.server import SocketIOServer
 
-SocketIOServer(("0.0.0.0", 8080), app, resource="socket.io").serve_forever()
+
+if __name__ == '__main__':
+    print "Flask-SockeetIO exmaple running on port {}".format(PORT)
+    SocketIOServer(("0.0.0.0", PORT), app, resource="socket.io").serve_forever()
