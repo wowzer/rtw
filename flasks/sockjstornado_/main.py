@@ -12,7 +12,7 @@ wsgi_app = Flask(__name__)
 
 
 # ---------------------------------------------------------------------------
-# Tornadio Stuff
+# SockJS Tornado Stuff
 
 class ExampleConnection(sockjs.tornado.SockJSConnection):
 
